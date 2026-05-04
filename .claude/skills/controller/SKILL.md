@@ -76,11 +76,16 @@ Other options:
 
 When the user describes their task:
 
-1. Assess what they need. Most tasks start with `/understand`.
-2. If the user already understands the problem and wants to code, start at
+1. **Discover project guidelines.** Before entering any phase, look for
+   project-specific instructions: `agents.md`, `CONTRIBUTING.md`,
+   `.editorconfig`, linter configs, style guides, `CLAUDE.md`, or similar files
+   in the repo root and `docs/` directory. Note what you find -- these guidelines
+   apply at every phase and take precedence over general defaults.
+2. Assess what they need. Most tasks start with `/understand`.
+3. If the user already understands the problem and wants to code, start at
    `/implement`.
-3. If the user provides a PR or diff, start at `/review`.
-4. If the user invokes a specific command, execute that phase directly.
+4. If the user provides a PR or diff, start at `/review`.
+5. If the user invokes a specific command, execute that phase directly.
 
 ## Rules
 

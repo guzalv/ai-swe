@@ -10,6 +10,10 @@ when possible, against real environments.
 
 ## Process
 
+> **Follow project-specific guidelines.** Check for `agents.md`,
+> `CONTRIBUTING.md`, style guides, and linter configs discovered at session
+> start. They take precedence over general defaults below.
+
 ### 1. Run Unit Tests
 
 Run the test suite for the affected packages:

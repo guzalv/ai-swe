@@ -10,6 +10,10 @@ for thorough coverage.
 
 ## Process
 
+> **Follow project-specific guidelines.** Check for `agents.md`,
+> `CONTRIBUTING.md`, style guides, and linter configs discovered at session
+> start. They take precedence over general defaults below.
+
 ### 1. Spawn Independent Review Agents
 
 Launch **2 review agents in parallel** using the Agent tool. Each agent should:

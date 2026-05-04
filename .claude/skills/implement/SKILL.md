@@ -9,6 +9,10 @@ Write the code. Work incrementally, verify each step, keep changes minimal.
 
 ## Process
 
+> **Follow project-specific guidelines.** Check for `agents.md`,
+> `CONTRIBUTING.md`, style guides, and linter configs discovered at session
+> start. They take precedence over general defaults below.
+
 ### 1. Plan the Change
 
 Before writing code:

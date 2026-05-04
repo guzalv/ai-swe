@@ -16,6 +16,10 @@ Build a clear mental model of the problem before writing any code.
 
 ## Process
 
+> **Follow project-specific guidelines.** Check for `agents.md`,
+> `CONTRIBUTING.md`, style guides, and linter configs discovered at session
+> start. They take precedence over general defaults below.
+
 ### 1. Gather Context
 
 Start with what the user provides (issue URL, PR link, code path, description),
