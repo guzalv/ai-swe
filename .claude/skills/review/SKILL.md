@@ -18,9 +18,9 @@ Launch **2 review agents in parallel** using the Agent tool. Each agent should:
 - Review independently (no shared context between agents)
 - Report findings with severity levels (critical, medium, low)
 
-Give each agent a slightly different focus:
-- **Agent 1**: Correctness, error handling, edge cases, consistency
-- **Agent 2**: Architecture, patterns, cross-file consistency, production risks
+Give both agents the **exact same task, context, and instructions**. The point
+of two agents is redundancy -- two independent passes on the same problem
+minimize the chance of missing issues. Do not split focus areas between them.
 
 Each agent prompt must be self-contained -- include the file paths, what
 changed, and what to look for. The agent has no context from this conversation.
