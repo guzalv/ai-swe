@@ -2,6 +2,10 @@
 
 ## Engineering Standards
 
+### Project-specific guidelines
+- Before starting work, look for project-specific guidelines: `agents.md`, `CONTRIBUTING.md`, style guides, linter configs, `.editorconfig`, or similar.
+- These take precedence over general defaults below. Follow them exactly.
+
 ### Code changes
 - Minimal diffs. Change only what the task requires.
 - No drive-by refactors, no cleanup that wasn't asked for.
