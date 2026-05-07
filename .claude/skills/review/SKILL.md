@@ -67,6 +67,8 @@ Evaluate each file against these criteria:
 - Tests cover behavior, not implementation details?
 - Edge cases tested?
 - Assertions specific enough? Could tests pass for wrong reasons?
+- Run the existing test suite for affected packages. Report what passed and
+  what failed. If tests fail, include the failure output.
 
 **Production readiness**
 - Hardcoded values that should be configurable?
@@ -80,6 +82,21 @@ Evaluate each file against these criteria:
 - Refactors beyond the scope of this change.
 - Personal style preferences.
 
+## Evidence standard
+
+Every finding MUST include hard proof. No vague claims.
+
+- **Quote the code.** Include the exact file path, line number, and the
+  relevant code snippet that shows the issue.
+- **Run tests when possible.** If there is a test suite, run it and include
+  the results. A claim like "this could break X" is weak -- a test command
+  showing a failure is strong.
+- **Show, don't speculate.** "This nil check is missing" must point to the
+  exact line where a nil value can reach. "This race condition exists" must
+  show the two unsynchronized access points.
+- **No findings without evidence.** If you can't point to specific code or
+  test output that supports a finding, don't report it.
+
 ## Output
 
 Group findings by severity:
@@ -87,8 +104,13 @@ Group findings by severity:
 - **Medium** -- should fix: inconsistencies, missing edge cases, unclear code.
 - **Low** -- nice to have: minor improvements, suggestions.
 
-For each finding, include the file path, line number, what the issue is, and
-why it matters. If you find no issues, say so explicitly.
+For each finding include:
+1. File path and line number.
+2. The relevant code snippet.
+3. What the issue is and why it matters.
+4. Test output if applicable.
+
+If you find no issues, say so explicitly.
 ````
 
 ### 3. Synthesize Findings
