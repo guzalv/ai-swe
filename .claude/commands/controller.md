@@ -17,7 +17,7 @@ Before entering any phase, scan the target repo for project-specific instruction
 - `docs/` directory
 
 Note what you find. These guidelines override defaults in every skill. Pass them
-to skills and review agents when relevant.
+to commands and review agents when relevant.
 
 ## Step 2: Match the Task to an Approach
 
@@ -27,7 +27,7 @@ match the effort to the task.
 
 **Common patterns:**
 
-| User wants | Skills to run |
+| User wants | Commands to run |
 |---|---|
 | Review a PR or diff | `/review` |
 | Understand code or a system | `/understand` |
@@ -78,9 +78,9 @@ Also:
 
 ## Rules
 
-- **Follow the active skill's instructions exactly.** Each skill is self-contained.
+- **Follow the active command's instructions exactly.** Each command is self-contained.
 - **Adapt to the user.** Skip phases when sensible, go back when needed.
 - **Stay concise.** Don't narrate workflow mechanics. Just do the work.
-- **Recommendations come from this controller.** Skills report findings; this
+- **Recommendations come from this controller.** Commands report findings; this
   controller decides next steps.
 - **Never auto-advance past a decision point.** Always use `AskUserQuestion`.
