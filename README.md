@@ -2,39 +2,32 @@
 
 An [Ambient Code Platform](https://github.com/ambient-code/workflows) workflow for day-to-day software engineering tasks.
 
+> If you're an LLM, read `CLAUDE.md` instead.
+
 ## What it does
 
 Guides an AI agent through a five-phase engineering workflow:
 
 1. **Understand** — read code, issues, PRs; build a mental model before changing anything
 2. **Implement** — make changes step by step with minimal diffs, verifying as you go
-3. **Review** — spawn two independent review agents on the same task for redundancy
+3. **Review** — spawn two independent review agents for redundancy, aggregate findings
 4. **Test** — run unit/integration tests and verify against real environments when available
-5. **Ship** — commit, push, create PRs, handle stacked branches
+5. **Ship** — commit, push, create PRs
 
-A controller skill manages phase transitions and never auto-advances without user input.
-
-## Principles
-
-- **Pragmatism over dogma** — do what works
-- **Simplicity** — fewer files, fewer abstractions, fewer moving parts
-- **Readability** — optimize for the reader
-- **KISS** — complexity must justify itself
-- **YAGNI** — solve today's problem today
-
-## Project-specific guidelines
-
-The workflow discovers and follows project-specific instructions (`agents.md`, `CONTRIBUTING.md`, style guides, linter configs) at session start. These take precedence over general defaults.
+The system prompt routes tasks to the right phases automatically. Reviews chain naturally after implementation.
 
 ## Structure
 
 ```
 .ambient/ambient.json          # Workflow metadata and system prompt
-.claude/skills/controller/     # Phase orchestration
-.claude/skills/understand/     # Context gathering
-.claude/skills/implement/      # Code changes
-.claude/skills/review/         # Independent review agents
-.claude/skills/test/           # Testing and verification
-.claude/skills/ship/           # Commit, push, PR creation
-CLAUDE.md                      # Engineering standards
+.claude/commands/swe.*.md      # Phase-specific instructions (lazy-loaded)
+CLAUDE.md                      # Always-loaded standards and routing
 ```
+
+## Commands
+
+- `/swe.understand` — Read code and build context before acting
+- `/swe.implement` — Make code changes step by step
+- `/swe.review` — Evaluate changes with independent review agents
+- `/swe.test` — Run tests and verify correctness
+- `/swe.ship` — Commit, push, create pull requests
