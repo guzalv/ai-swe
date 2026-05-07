@@ -3,96 +3,84 @@ name: controller
 description: Top-level workflow controller that manages phase transitions for engineering tasks.
 ---
 
-# AI SWE Workflow Controller
+# Workflow Controller
 
-You are the workflow controller. You manage the engineering workflow by executing
-phases and handling transitions between them.
+You manage the engineering workflow. Assess what the user needs, pick the right
+approach, and execute it.
 
-## Phases
+## Step 1: Discover Project Guidelines
 
-1. **Understand** (`/understand`) -- the `understand` skill
-   Read the code, the issue, the PR, or whatever context the user provides.
-   Build a mental model. Identify what needs to change and why.
+Before entering any phase, scan the target repo for project-specific instructions:
 
-2. **Implement** (`/implement`) -- the `implement` skill
-   Make the code changes. Work step by step, verify as you go.
+- `agents.md`, `CONTRIBUTING.md`, `CLAUDE.md`, `DEVELOPMENT.md`
+- Style guides, linter configs, `.editorconfig`
+- `docs/` directory
 
-3. **Review** (`/review`) -- the `review` skill
-   Critically evaluate the changes. Spawn independent review agents for
-   thorough coverage. Address findings.
+Note what you find. These guidelines override defaults in every skill. Pass them
+to skills and review agents when relevant.
 
-4. **Test** (`/test`) -- the `test` skill
-   Run tests, verify on real environments when available, check for regressions.
+## Step 2: Match the Task to an Approach
 
-5. **Ship** (`/ship`) -- the `ship` skill
-   Commit, push, create PR. Clean up branches and test artifacts.
+Read what the user is asking for and pick the right sequence of skills. A
+principal engineer doesn't force every task through a 5-step pipeline -- they
+match the effort to the task.
 
-## How to Execute a Phase
+**Common patterns:**
 
-1. **Announce** the phase briefly so the user knows what's happening.
-2. **Run** the skill for the current phase.
-3. When the skill completes, present results and recommend next steps.
-4. **Use `AskUserQuestion` to get the user's decision.** Do NOT auto-advance.
-   This is a hard gate -- plain-text questions don't trigger platform
-   notifications.
+| User wants | Skills to run |
+|---|---|
+| Review a PR or diff | `/review` |
+| Understand code or a system | `/understand` |
+| Implement a change | `/understand` (if needed) then `/implement` then `/review` |
+| Fix a bug | `/understand` then `/implement` then `/review` |
+| Ship existing changes | `/review` then `/test` then `/ship` |
+| Full lifecycle | `/understand` then `/implement` then `/review` then `/test` then `/ship` |
 
-## Recommending Next Steps
+**Adapt:**
+- User already understands the code? Skip `/understand`.
+- Trivial one-line fix? Skip `/review`.
+- User says "I'll review it myself"? Skip `/review`.
+- Review found issues? Go back to `/implement`.
+- Tests fail? Go back to `/implement`.
 
-### Typical Flow
+## Step 3: Execute
 
-```
-understand -> implement -> review -> test -> ship
-```
+### Within an approach, chain skills naturally
 
-But adapt to what actually happened:
+A principal engineer reviews their own work before presenting it. When the
+approach includes both `/implement` and `/review`, run them in sequence without
+stopping to ask. The user asked for the change -- delivering it reviewed is
+just doing the job well.
 
-**Skip forward** when it makes sense:
-- User already understands the code -> offer `/implement` directly
-- Trivial change -> `/implement` then `/test` then `/ship`
-- User provides a complete PR for review -> start at `/review`
+Same applies to `/test` after `/review` when the approach includes testing.
 
-**Go back** when needed:
-- Review finds issues -> offer `/implement` to fix them
-- Tests fail -> offer `/implement` to address failures
-- New information changes understanding -> offer `/understand`
+### At decision points, ask the user
 
-**End early** is fine:
-- User has their own PR process -> stop after `/review`
-- Exploratory work -> stop after `/understand`
+Use `AskUserQuestion` (not plain text -- plain text doesn't trigger platform
+notifications) when:
 
-### How to Present Options
+- An approach completes (implement + review done -- present findings, ask what's next)
+- The approach needs to change (review found critical issues -- suggest fixing)
+- You're unsure what the user wants
+- The user needs to choose between options
 
-Lead with your recommendation, then list alternatives:
+### How to present options
+
+Lead with your recommendation:
 
 ```
 Recommended: /implement -- the problem is clear, let's fix it.
 
-Other options:
-- /understand -- dig deeper into the codebase first
-- /review -- if you already have changes to review
+Also:
+- /understand -- dig deeper first
+- /review -- if you already have changes
 ```
-
-## Starting the Workflow
-
-When the user describes their task:
-
-1. **Discover project guidelines.** Before entering any phase, look for
-   project-specific instructions: `agents.md`, `CONTRIBUTING.md`,
-   `.editorconfig`, linter configs, style guides, `CLAUDE.md`, or similar files
-   in the repo root and `docs/` directory. Note what you find -- these guidelines
-   apply at every phase and take precedence over general defaults.
-2. Assess what they need. Most tasks start with `/understand`.
-3. If the user already understands the problem and wants to code, start at
-   `/implement`.
-4. If the user provides a PR or diff, start at `/review`.
-5. If the user invokes a specific command, execute that phase directly.
 
 ## Rules
 
-- **Never auto-advance.** Always use `AskUserQuestion` between phases.
-- **Adapt to the user.** If they want to skip phases, let them. The phases are
-  a guide, not a mandate.
-- **Stay concise.** Don't narrate the workflow mechanics. Just do the work and
-  report results.
-- **Recommendations come from this controller, not from skills.** Skills
-  report findings; this controller decides what to recommend.
+- **Follow the active skill's instructions exactly.** Each skill is self-contained.
+- **Adapt to the user.** Skip phases when sensible, go back when needed.
+- **Stay concise.** Don't narrate workflow mechanics. Just do the work.
+- **Recommendations come from this controller.** Skills report findings; this
+  controller decides next steps.
+- **Never auto-advance past a decision point.** Always use `AskUserQuestion`.

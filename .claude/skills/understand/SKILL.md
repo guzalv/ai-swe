@@ -5,25 +5,13 @@ description: Build a thorough understanding of code, issues, PRs, or systems bef
 
 # Understand
 
-Build a clear mental model of the problem before writing any code.
-
-## When to Use
-
-- Starting work on an unfamiliar area of the codebase
-- Reviewing a PR or set of PRs
-- Investigating a bug report or incident
-- Before any non-trivial implementation
+Build a clear mental model before writing any code. Depth over breadth.
 
 ## Process
 
-> **Follow project-specific guidelines.** Check for `agents.md`,
-> `CONTRIBUTING.md`, style guides, and linter configs discovered at session
-> start. They take precedence over general defaults below.
-
 ### 1. Gather Context
 
-Start with what the user provides (issue URL, PR link, code path, description),
-then expand outward:
+Start with what the user provides, then expand outward:
 
 - **Read the relevant code.** Don't skim -- read the actual functions, types,
   and call sites. Use `file:line` references when discussing specific code.
@@ -31,50 +19,42 @@ then expand outward:
   it is. Recent changes are especially relevant.
 - **Read tests.** Tests document intended behavior better than comments.
 - **Check related issues/PRs.** Use `gh` CLI to pull context from GitHub.
+- **Read project docs.** README, docs/ directory, CONTRIBUTING.md.
+
+Prefer understanding 3 files deeply over skimming 20. Use the Agent tool with
+`subagent_type: "Explore"` for broad exploration that would take more than 3
+queries.
 
 ### 2. Map the Problem
 
-For bug fixes:
-- What is the expected behavior vs actual behavior?
-- What changed recently that might have caused this?
-- What is the minimal reproduction path?
+**For bugs:**
+- Expected vs actual behavior.
+- Recent changes that might have caused it.
+- Minimal reproduction path.
 
-For features:
-- What exists today? What needs to change?
-- What are the boundaries of the change? Which files, packages, layers?
-- Are there existing patterns to follow?
+**For features:**
+- What exists today. What needs to change.
+- Boundaries and constraints.
+- Existing patterns to follow.
 
-For PRs/code review:
-- What is the PR trying to accomplish?
-- Read every file in the diff, not just the ones that look interesting.
-- Check for: correctness, edge cases, test coverage, naming, consistency with
-  codebase patterns.
+**For PRs / code review:**
+- What the PR is trying to accomplish.
+- Read every changed file in full, not just the interesting-looking ones.
+- Check correctness, edge cases, test coverage, naming, consistency.
 
-### 3. Identify Risks and Questions
+### 3. Identify Risks
 
 - What could go wrong with the obvious approach?
 - What assumptions are being made?
-- What questions should be answered before proceeding?
-- Are there cross-cutting concerns (migrations, backwards compatibility,
-  performance)?
+- Cross-cutting concerns: migrations, backwards compatibility, performance.
+- Questions that need answering before proceeding.
 
 ### 4. Present Findings
 
-Summarize concisely:
-- **What you found** -- the key facts, not a play-by-play of your exploration
-- **What needs to change** -- specific files, functions, behaviors
-- **Open questions** -- things you couldn't determine from the code alone
-- **Recommended approach** -- if you have one, with the main tradeoff
+Concisely:
+- **What you found** -- key facts with `file:line` references.
+- **What needs to change** -- specific files, functions, behaviors.
+- **Open questions** -- things you couldn't determine from the code.
+- **Recommended approach** -- with the main tradeoff.
 
-## Output
-
-No artifacts required. This phase produces understanding, not files.
-Present findings directly in conversation.
-
-## Guidelines
-
-- Prefer depth over breadth. Understanding 3 files well beats skimming 20.
-- Use the Agent tool with `subagent_type: "Explore"` for broad codebase
-  exploration that would take more than 3 queries.
-- Don't propose solutions until you've finished understanding the problem.
-- If the codebase has documentation (CLAUDE.md, README, docs/), read it.
+No artifacts required. Present findings directly in conversation.
