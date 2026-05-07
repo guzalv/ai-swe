@@ -9,7 +9,14 @@ Evaluate changes before they ship. Use independent review agents for coverage.
 
 ## Process
 
-### 1. Identify What Changed
+### 1. Collect Prior Findings
+
+Check if a review was already performed earlier in this conversation (e.g., by
+a built-in review skill). If so, note those findings -- they will be included
+in the agent prompt so the independent agents can verify, challenge, or extend
+them. Do not discard prior work.
+
+### 2. Identify What Changed
 
 Determine the diff to review:
 - Uncommitted changes: `git diff`
@@ -18,7 +25,7 @@ Determine the diff to review:
 
 Get the list of changed files. Read each one to understand the full context.
 
-### 2. Spawn Review Agents
+### 3. Spawn Review Agents
 
 Launch **2 review agents in parallel** using the Agent tool.
 
@@ -27,8 +34,8 @@ problem minimize the chance of missing issues. Do not split focus areas.
 
 **The agent prompt must be completely self-contained.** Sub-agents have zero
 context from this conversation. Everything they need must be in the prompt:
-the file paths, what changed, the review criteria, and any project-specific
-guidelines.
+the file paths, what changed, the review criteria, any project-specific
+guidelines, and any prior review findings.
 
 Build the prompt using this template (fill in the bracketed sections):
 
@@ -48,6 +55,12 @@ findings.
 ## Project guidelines
 
 [paste any project-specific guidelines discovered earlier, or write "None"]
+
+## Prior review findings
+
+[If a prior review was performed, paste its findings here verbatim. Your job
+is to independently verify these findings AND find anything they missed. If
+no prior review exists, write "None -- this is the first review pass."]
 
 ## Review checklist
 
@@ -97,6 +110,13 @@ Every finding MUST include hard proof. No vague claims.
 - **No findings without evidence.** If you can't point to specific code or
   test output that supports a finding, don't report it.
 
+## Prior finding verification
+
+If prior findings were provided above, explicitly state for each one:
+- **Confirmed** -- you independently found the same issue.
+- **Disputed** -- you disagree, with evidence for why.
+- **Cannot verify** -- you couldn't confirm or deny.
+
 ## Output
 
 Group findings by severity:
@@ -113,14 +133,16 @@ For each finding include:
 If you find no issues, say so explicitly.
 ````
 
-### 3. Synthesize Findings
+### 4. Synthesize Findings
 
 After both agents return:
-- Merge findings and deduplicate overlapping issues.
+- Merge findings from both agents AND any prior review.
+- Deduplicate overlapping issues.
+- For prior findings: note which were confirmed, disputed, or unverified.
 - Group by severity.
 - Separate actionable from informational.
 
-### 4. Address Findings
+### 5. Address Findings
 
 - **Critical**: Fix immediately. These block shipping.
 - **Medium**: Fix unless the user explicitly defers.
@@ -128,9 +150,10 @@ After both agents return:
 
 Run tests after fixes to verify no regressions.
 
-### 5. Report
+### 6. Report
 
 Present concisely:
 - What was found (grouped by severity).
+- What was confirmed from prior reviews.
 - What was fixed.
 - What was deferred and why.
