@@ -1,5 +1,5 @@
 ---
-name: test
+name: swe.test
 description: Run tests, verify on real environments, check for regressions.
 ---
 

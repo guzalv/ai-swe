@@ -1,5 +1,5 @@
 ---
-name: ship
+name: swe.ship
 description: Commit, push, and create pull requests.
 ---
 

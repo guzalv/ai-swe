@@ -1,5 +1,5 @@
 ---
-name: understand
+name: swe.understand
 description: Build a thorough understanding of code, issues, PRs, or systems before making changes.
 ---
 

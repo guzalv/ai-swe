@@ -1,5 +1,5 @@
 ---
-name: evaluate
+name: swe.review
 description: Critically evaluate code changes using independent review agents.
 ---
 

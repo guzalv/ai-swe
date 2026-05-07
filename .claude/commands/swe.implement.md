@@ -1,5 +1,5 @@
 ---
-name: implement
+name: swe.implement
 description: Make code changes step by step, verifying as you go.
 ---
 
