@@ -1,5 +1,5 @@
 ---
-name: review
+name: evaluate
 description: Critically evaluate code changes using independent review agents.
 ---
 

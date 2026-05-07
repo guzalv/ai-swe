@@ -29,17 +29,17 @@ match the effort to the task.
 
 | User wants | Commands to run |
 |---|---|
-| Review a PR or diff | `/review` |
+| Review a PR or diff | `/evaluate` |
 | Understand code or a system | `/understand` |
-| Implement a change | `/understand` (if needed) then `/implement` then `/review` |
-| Fix a bug | `/understand` then `/implement` then `/review` |
-| Ship existing changes | `/review` then `/test` then `/ship` |
-| Full lifecycle | `/understand` then `/implement` then `/review` then `/test` then `/ship` |
+| Implement a change | `/understand` (if needed) then `/implement` then `/evaluate` |
+| Fix a bug | `/understand` then `/implement` then `/evaluate` |
+| Ship existing changes | `/evaluate` then `/test` then `/ship` |
+| Full lifecycle | `/understand` then `/implement` then `/evaluate` then `/test` then `/ship` |
 
 **Adapt:**
 - User already understands the code? Skip `/understand`.
-- Trivial one-line fix? Skip `/review`.
-- User says "I'll review it myself"? Skip `/review`.
+- Trivial one-line fix? Skip `/evaluate`.
+- User says "I'll review it myself"? Skip `/evaluate`.
 - Review found issues? Go back to `/implement`.
 - Tests fail? Go back to `/implement`.
 
@@ -48,11 +48,11 @@ match the effort to the task.
 ### Within an approach, chain skills naturally
 
 A principal engineer reviews their own work before presenting it. When the
-approach includes both `/implement` and `/review`, run them in sequence without
+approach includes both `/implement` and `/evaluate`, run them in sequence without
 stopping to ask. The user asked for the change -- delivering it reviewed is
 just doing the job well.
 
-Same applies to `/test` after `/review` when the approach includes testing.
+Same applies to `/test` after `/evaluate` when the approach includes testing.
 
 ### At decision points, ask the user
 
@@ -73,7 +73,7 @@ Recommended: /implement -- the problem is clear, let's fix it.
 
 Also:
 - /understand -- dig deeper first
-- /review -- if you already have changes
+- /evaluate -- if you already have changes
 ```
 
 ## Rules

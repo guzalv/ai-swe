@@ -13,6 +13,6 @@ This is an engineering workflow. Instructions live in commands -- not here.
 - `/controller` -- Assess the task, pick the approach, manage transitions
 - `/understand` -- Read code and build context before acting
 - `/implement` -- Make code changes step by step
-- `/review` -- Evaluate changes with independent review agents
+- `/evaluate` -- Evaluate changes with independent review agents
 - `/test` -- Run tests and verify correctness
 - `/ship` -- Commit, push, create pull requests
